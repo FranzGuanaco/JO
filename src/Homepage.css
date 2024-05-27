@@ -1,0 +1,115 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin-top: 12vh;
+}
+
+@media (max-width: 600px) {
+  .App-header {
+    margin-top: 30vh; /* Augmenter le margin-top pour les petits écrans */
+  }
+}
+
+@media (max-width: 550px) {
+  .App-header {
+    margin-top: 60vh; /* Augmenter le margin-top pour les petits écrans */
+  }
+}
+
+@media (max-width: 350px) {
+  .App-header {
+    margin-top: 70vh; /* Augmenter le margin-top pour les petits écrans */
+  }
+}
+
+.offer-button, .admin-button {
+  background-color: #ff9800; /* Couleur de fond du bouton */
+  border: none; /* Enlever les bordures */
+  color: white; /* Couleur du texte */
+  padding: 15px 30px; /* Espacement interne */
+  text-align: center; /* Centrer le texte */
+  text-decoration: none; /* Enlever la décoration du texte */
+  display: inline-block; /* Affichage en ligne */
+  font-size: 20px; /* Taille de la police */
+  margin: 20px 0; /* Espacement extérieur */
+  cursor: pointer; /* Curseur pointer */
+  border-radius: 5px; /* Coins arrondis */
+  transition: background-color 0.3s ease; /* Transition pour l'effet hover */
+}
+
+.offer-button:hover {
+  background-color: #e68a00; /* Couleur de fond en hover */
+}
+
+.admin-button {
+  background-color: #a7a7a7; /* Couleur de fond du bouton */
+  border: none; /* Enlever les bordures */
+  color: white; /* Couleur du texte */
+  padding: 15px 30px; /* Espacement interne */
+  text-align: center; /* Centrer le texte */
+  text-decoration: none; /* Enlever la décoration du texte */
+  display: inline-block; /* Affichage en ligne */
+  font-size: 20px; /* Taille de la police */
+  margin: 20px 0; /* Espacement extérieur */
+  cursor: pointer; /* Curseur pointer */
+  border-radius: 5px; /* Coins arrondis */
+  transition: background-color 0.3s ease; /* Transition pour l'effet hover */
+}
+
+.admin-button:hover {
+  background-color: #4c4c4c; /* Couleur de fond en hover */
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Ajouter de l'espace entre les boutons */
+}
+
+section {
+  padding: 3rem 5rem 1rem;
+  text-align: center;
+  color: #dedede;
+}
+
+/* Styles spécifiques pour la section des épreuves */
+#epreuves {
+  color: #2e2c2b; /* Change la couleur du texte à partir de cette section */
+}
+
+#epreuves .epreuve {
+  background-color: #ffffff;
+  margin: 1em 0;
+  padding: 1em;
+  border-radius: 5px;
+}
+
+footer {
+  background-color: #dedede;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  padding: 1em 0;
+}
+
+@media (max-width: 600px) {
+  nav {
+    flex-direction: column;
+    gap: 10px; /* Ajuster l'espacement pour les petits écrans */
+  }
+
+  nav ul li {
+    margin: 10px 0;
+  }
+
+  #epreuves .epreuve {
+    margin: 0.5em 0;
+  }
+}

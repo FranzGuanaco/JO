@@ -1,0 +1,54 @@
+/* App.css */
+.App {
+    text-align: center;
+  }
+
+  
+  .App-header {
+    background-color: #282c34;
+    padding: 20px;
+    color: white;
+  }
+  
+  .offer-list, .cart, .admin {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .offer {
+    margin: 10px 0;
+  }
+  
+  .offer button {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .offer button:hover {
+    background-color: #0056b3;
+  }
+  
+  .cart ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .admin form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .admin input {
+    margin: 10px 0;
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+ 

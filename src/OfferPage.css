@@ -1,0 +1,114 @@
+/* Styles pour la page des offres */
+.OfferPage {
+    text-align: center;
+  }
+  
+  .OfferPage-header {
+    background-color: #282c34;
+    min-height: 30vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
+  
+  .OfferPage-main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+  }
+  
+  .offer-list {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .offer {
+    background-color: #f5f5f5;
+    margin: 10px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .offer:hover {
+    transform: scale(1.05);
+  }
+  
+  .offer h3 {
+    margin: 0 0 10px;
+  }
+  
+  .offer p {
+    margin: 0 0 20px;
+  }
+  
+  .add-to-cart-button {
+    background-color: #ff9800;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 0;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-to-cart-button:hover {
+    background-color: #e68a00;
+  }
+  
+  .cart {
+    flex: 1;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cart h2 {
+    margin-top: 0;
+    color: black;
+  }
+  
+  .cart ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .cart li {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Ajoutez ceci dans OfferPage.css */
+.validate-button {
+    background-color: #4caf50; /* Couleur de fond verte */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 20px 0; /* Marges pour espacement */
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .validate-button:hover {
+    background-color: #45a049; /* Couleur de fond en hover */
+  }
+  
