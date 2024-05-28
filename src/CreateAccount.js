@@ -8,26 +8,21 @@ class CreateAccount extends React.Component {
 
     // Initialisation de l'état du composant
     this.state = {
-      userName: "",
+      firstName: "",
+      lastName: "",
       email: "",
       password: "",
     };
   }
 
-  componentDidMount() {
-    // Effectuer une requête GET au montage du composant pour tester l'authentification
-    axios.get('http://localhost:3001/auth')
-      .then(response => {
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.error('Erreur lors de la requête');
-      });
+  // Gestionnaire de changement pour le champ prénom
+  handleFirstNameChange = (event) => {
+    this.setState({ firstName: event.target.value });
   }
 
-  // Gestionnaire de changement pour le champ nom d'utilisateur
-  handleUsernameChange = (event) => {
-    this.setState({ userName: event.target.value });
+  // Gestionnaire de changement pour le champ nom
+  handleLastNameChange = (event) => {
+    this.setState({ lastName: event.target.value });
   }
 
   // Gestionnaire de changement pour le champ email
@@ -40,8 +35,9 @@ class CreateAccount extends React.Component {
     event.preventDefault();
     
     // Effectuer une requête POST pour la création de compte
-    axios.post('http://localhost:3001/register', {
-      nom_utilisateur: this.state.userName,
+    axios.post('http://localhost:3002/register', {
+      nom: this.state.lastName,
+      prenom: this.state.firstName,
       email: this.state.email,
       mot_de_passe: this.state.password
     })
@@ -70,20 +66,17 @@ class CreateAccount extends React.Component {
     window.location.href = '/login';
   }
 
-  handleAdminLogin = () => {
-    // Redirection vers la page de connexion administrateur
-    window.location.href = '/admin-login';
-  }
-
   render() {
-    const { userName, email, password } = this.state;
+    const { firstName, lastName, email, password } = this.state;
 
     return (
       <div className="Id">
         {/* Formulaire de création de compte */}
         <form className="formBox" onSubmit={this.handleSubmit}>
-          <label htmlFor="username" style={{margin:'auto'}}>{this.props.title} :</label>
-          <input type="text" id="username" name="username" value={userName} onChange={this.handleUsernameChange} placeholder="" required />
+          <label htmlFor="firstName" style={{margin:'auto'}}>{this.props.title1} :</label>
+          <input type="text" id="firstName" name="firstName" value={firstName} onChange={this.handleFirstNameChange} placeholder="" required />
+          <label htmlFor="lastName" style={{margin:'auto'}}>{this.props.title4}</label>
+          <input type="text" id="lastName" name="lastName" value={lastName} onChange={this.handleLastNameChange} placeholder="" required />
           <label htmlFor="email" style={{margin:'auto'}}>{this.props.title3}</label>
           <input type="email" id="email" name="email" value={email} onChange={this.handleEmailChange} placeholder="" required />
           <label htmlFor="password" style={{margin:'auto'}}>{this.props.title2}</label>
@@ -92,7 +85,6 @@ class CreateAccount extends React.Component {
         </form>
         <div className="button-group">
           <button className="secondary-button" onClick={this.handleLogin}>Login</button>
-          <button className="secondary-button" onClick={this.handleAdminLogin}>Connexion Admin</button>
         </div>
       </div>
     );
@@ -101,9 +93,12 @@ class CreateAccount extends React.Component {
 
 // Valeurs par défaut des propriétés
 CreateAccount.defaultProps = {
-  title: 'Username',
+  title1: 'First Name',
   title2: 'Password',
   title3: 'Email',
+  title4: 'Last Name',
 };
 
 export default CreateAccount;
+
+

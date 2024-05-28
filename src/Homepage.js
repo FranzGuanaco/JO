@@ -10,7 +10,7 @@ function Homepage() {
         <h1>Bienvenue aux Jeux Olympiques</h1>
         <nav>
           <Link to="/offer" className="offer-button">Voir les offres</Link>
-          <Link to="/admin" className="admin-button">Admin</Link>
+          <Link to="/adminLogin" className="admin-button">Admin</Link>
         </nav>
       </header>
       <main>

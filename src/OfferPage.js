@@ -1,19 +1,29 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { AppContext } from './AppContext';
 import { useNavigate } from 'react-router-dom';
 import OfferList from './component/Offerlist';
 import Cart from './component/Cart';
+import axios from 'axios';
 import './OfferPage.css';
 
 function OfferPage() {
-  const [offers, setOffers] = useState([
-    { id: 1, name: 'Solo', description: 'Accès pour 1 personne', capacity: 1 },
-    { id: 2, name: 'Duo', description: 'Accès pour 2 personnes', capacity: 2 },
-    { id: 3, name: 'Familiale', description: 'Accès pour 4 personnes', capacity: 4 },
-  ]);
-
+  const [offers, setOffers] = useState([]);
   const navigate = useNavigate();
-  const { cart, setCart } = useContext(AppContext); // Utiliser le contexte
+  const { cart, setCart } = useContext(AppContext);
+
+  useEffect(() => {
+    axios.get('http://localhost:3002/offers')
+      .then(response => {
+        if (response.data.status === 'success') {
+          setOffers(response.data.offers);
+        } else {
+          console.error('Erreur lors de la récupération des offres:', response.data.message);
+        }
+      })
+      .catch(error => {
+        console.error('Erreur lors de la requête:', error);
+      });
+  }, []);
 
   const addToCart = (offer) => {
     if (!isAuthenticated()) {
@@ -42,6 +52,3 @@ function OfferPage() {
 }
 
 export default OfferPage;
-
-
-

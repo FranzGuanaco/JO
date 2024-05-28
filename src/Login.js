@@ -5,13 +5,13 @@ import axios from "axios";
 import { AppContext } from './AppContext';
 
 const Login = () => {
-  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { cart } = useContext(AppContext);
 
-  const handleUsernameChange = (event) => {
-    setUserName(event.target.value);
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
   };
 
   const handlePasswordChange = (event) => {
@@ -21,9 +21,9 @@ const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    axios.post('http://localhost:3001/login', {
-      nom_utilisateur: userName,
-      mot_de_passe: password
+    axios.post('http://localhost:3002/login_user', {
+      email: email,
+      password: password
     })
     .then(response => {
       if(response.data.status === 'success') {
@@ -41,14 +41,14 @@ const Login = () => {
   return (
     <div className="Id">
       <form className="formBox" onSubmit={handleSubmit}>
-        <label htmlFor="username" style={{margin:'auto'}}>{'Username'} :</label>
-        <input type="text" id="username" name="username" value={userName} onChange={handleUsernameChange} placeholder="" />
+        <label htmlFor="email" style={{margin:'auto'}}>{'Email'} :</label>
+        <input type="text" id="email" name="email" value={email} onChange={handleEmailChange} placeholder="Email" />
         <label htmlFor="password" style={{margin:'auto'}}>{'Password'}</label>
         <input type="password" id="password" name="password" value={password} onChange={handlePasswordChange}/>
         <input type="submit" value="Se connecter" />
       </form>
       <div className="button-group">
-        <button className="secondary-button" onClick={() => navigate('/payment')}>Créer un compte</button>
+        <button className="secondary-button" onClick={() => navigate('/create_account')}>Créer un compte</button>
       </div>
       <div>
         <h3>Articles dans le panier :</h3>
