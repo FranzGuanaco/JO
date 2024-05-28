@@ -1,51 +1,34 @@
-import React from "react";
-import { render } from "react-dom";
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import './Login.css';
 import axios from "axios";
-import jwtDecode from "jwt-decode";
+import { AppContext } from './AppContext';
 
-class Login extends React.Component {
-  constructor(props) {
-    super(props);
+const Login = () => {
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const { cart } = useContext(AppContext);
 
-    // Initialisation de l'état du composant
-    this.state = {
-      userName: "",
-      password: null, // Propriété pour stocker le mot de passe
-    };
-  }
+  const handleUsernameChange = (event) => {
+    setUserName(event.target.value);
+  };
 
-  componentDidMount() {
-    // Effectuer une requête GET au montage du composant pour tester l'authentification
-    axios.get('http://localhost:3001/auth')
-      .then(response => {
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.error('Erreur lors de la requête');
-      });
-  }
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
 
-  // Gestionnaire de changement pour le champ nom d'utilisateur
-  handleUsernameChange = (event) => {
-    this.setState({ userName: event.target.value });
-  }  
-
-  // Gestionnaire de soumission du formulaire
-  handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    
-    // Effectuer une requête POST pour l'authentification
+
     axios.post('http://localhost:3001/login', {
-      nom_utilisateur: this.state.userName,
-      mot_de_passe: this.state.password
+      nom_utilisateur: userName,
+      mot_de_passe: password
     })
     .then(response => {
       if(response.data.status === 'success') {
         alert(response.data.message);
-        // Redirection de l'utilisateur en cas de succès
-        const redirectUrl = `/Admin?username=${this.state.userName}`;
-        window.location.href = redirectUrl;
+        navigate('/payment'); // Utiliser navigate pour rediriger vers la page de paiement
       } else {
         alert(response.data.message);
       }
@@ -53,53 +36,33 @@ class Login extends React.Component {
     .catch(error => {
       console.error('Erreur lors de la requête:', error);
     });
-  }
+  };
 
-  // Gestionnaire de changement pour le champ mot de passe
-  handlePasswordChange = (event) => {
-    this.setState({ password: event.target.value });
-  }
-
-  handleCreateAccount = () => {
-    // Redirection vers la page de création de compte
-    window.location.href = '/create-account';
-  }
-
-  handleAdminLogin = () => {
-    // Redirection vers la page de connexion administrateur
-    window.location.href = '/admin-login';
-  }
-
-  render() {
-    const { userName, password } = this.state;
-
-    return (
-      <div className="Id">
-        {/* Formulaire d'authentification */}
-        <form className="formBox" onSubmit={this.handleSubmit}>
-          <label htmlFor="username" style={{margin:'auto'}}>{this.props.title} :</label>
-          <input type="text" id="username" name="username" value={userName} onChange={this.handleUsernameChange} placeholder="" />
-          <label htmlFor="password" style={{margin:'auto'}}>{this.props.title2}</label>
-          <input type="password" id="password" name="password" value={password} onChange={this.handlePasswordChange}/>
-          <input type="submit" value="Se connecter"/>
-        </form>
-        <div className="button-group">
-          <button className="secondary-button" onClick={this.handleCreateAccount}>Créer un compte</button>
-          <button className="secondary-button" onClick={this.handleAdminLogin}>Connexion Admin</button>
-        </div>
+  return (
+    <div className="Id">
+      <form className="formBox" onSubmit={handleSubmit}>
+        <label htmlFor="username" style={{margin:'auto'}}>{'Username'} :</label>
+        <input type="text" id="username" name="username" value={userName} onChange={handleUsernameChange} placeholder="" />
+        <label htmlFor="password" style={{margin:'auto'}}>{'Password'}</label>
+        <input type="password" id="password" name="password" value={password} onChange={handlePasswordChange}/>
+        <input type="submit" value="Se connecter" />
+      </form>
+      <div className="button-group">
+        <button className="secondary-button" onClick={() => navigate('/payment')}>Créer un compte</button>
       </div>
-    );
-  }
-}
-
-// Valeurs par défaut des propriétés
-Login.defaultProps = {
-  title: 'Username',
-  title2: 'Password',
+      <div>
+        <h3>Articles dans le panier :</h3>
+        <ul>
+          {cart.map((item, index) => (
+            <li key={index}>{item.name} - {item.description}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
 };
 
 export default Login;
-
 
 
 

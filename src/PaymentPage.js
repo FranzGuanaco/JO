@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import './PaymentPage.css'; // Fichier CSS spécifique pour la page de paiement
+import React, { useState, useContext } from 'react';
+import './PaymentPage.css';
+import { AppContext } from './AppContext';
 
 function PaymentPage() {
   const [form, setForm] = useState({
@@ -10,6 +11,9 @@ function PaymentPage() {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const { cart } = useContext(AppContext);
+
+  console.log('Cart in PaymentPage:', cart); // Ajoutez ce log pour vérifier le contenu du panier
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,7 +25,6 @@ function PaymentPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Simuler la soumission du paiement
     console.log('Payment Submitted:', form);
     setSubmitted(true);
   };
@@ -87,8 +90,15 @@ function PaymentPage() {
           </form>
         )}
       </main>
+      <h1>Articles dans le panier :</h1>
+      <ul>
+        {cart.map((item, index) => (
+          <li key={index}>{item.name} - {item.description}</li>
+        ))}
+      </ul>
     </div>
   );
 }
 
 export default PaymentPage;
+

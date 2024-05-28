@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { AppContext } from './AppContext';
 import { useNavigate } from 'react-router-dom';
 import OfferList from './component/Offerlist';
 import Cart from './component/Cart';
@@ -11,8 +12,8 @@ function OfferPage() {
     { id: 3, name: 'Familiale', description: 'Accès pour 4 personnes', capacity: 4 },
   ]);
 
-  const [cart, setCart] = useState([]);
   const navigate = useNavigate();
+  const { cart, setCart } = useContext(AppContext); // Utiliser le contexte
 
   const addToCart = (offer) => {
     if (!isAuthenticated()) {

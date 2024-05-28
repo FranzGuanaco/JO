@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AppContext } from '../AppContext';
 
-const Cart = ({ cart }) => {
+const Cart = () => {
 
   const navigate = useNavigate();
+  const { cart } = useContext(AppContext);
   
   const handleValidate = () => {
     navigate('/login'); // Rediriger vers la page de connexion
