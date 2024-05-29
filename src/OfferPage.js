@@ -52,3 +52,4 @@ function OfferPage() {
 }
 
 export default OfferPage;
+

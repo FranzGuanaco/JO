@@ -1,6 +1,6 @@
 /* Default styles */
 html, body, #root {
-    height: 60%;
+    
     margin: 0;
     display: flex;
     justify-content: center;

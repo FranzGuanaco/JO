@@ -8,7 +8,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { cart } = useContext(AppContext);
+  const { cart, setUser } = useContext(AppContext); // Ajouter setUser au contexte
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -28,6 +28,15 @@ const Login = () => {
     .then(response => {
       if(response.data.status === 'success') {
         alert(response.data.message);
+        console.log("API response:", response.data); // Ajoutez ceci pour déboguer
+        // Mettre à jour le contexte avec les informations de l'utilisateur
+        const user = {
+          id: response.data.user_id, // Assurez-vous que l'API renvoie l'ID de l'utilisateur
+          email: email
+        };
+        console.log("User ID from API:", response.data.user_id); // Ajoutez ceci pour déboguer
+        setUser(user); // Utiliser le contexte pour définir l'utilisateur
+        console.log("User context updated:", user); // Ajoutez ceci pour déboguer
         navigate('/payment'); // Utiliser navigate pour rediriger vers la page de paiement
       } else {
         alert(response.data.message);
@@ -63,6 +72,9 @@ const Login = () => {
 };
 
 export default Login;
+
+
+
 
 
 

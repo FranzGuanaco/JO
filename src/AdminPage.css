@@ -1,3 +1,12 @@
+html, body, #root {
+
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #282c34;
+}
+
 /* Styles pour la page administrateur */
 .admin-page {
     text-align: center;

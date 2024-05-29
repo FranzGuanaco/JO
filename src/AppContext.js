@@ -1,15 +1,25 @@
 import React, { createContext, useState } from 'react';
 
-const AppContext = createContext();
+export const AppContext = createContext();
 
-const AppProvider = ({ children }) => {
+export const AppProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
+  const [user, setUser] = useState(null); // Assurez-vous que l'utilisateur est initialisé correctement
+
+  const handleSetUser = (user) => {
+    console.log("Setting user in context:", user);
+    setUser(user);
+  };
+
+  console.log("AppProvider user:", user);
 
   return (
-    <AppContext.Provider value={{ cart, setCart }}>
+    <AppContext.Provider value={{ cart, setCart, user, setUser: handleSetUser }}>
       {children}
     </AppContext.Provider>
   );
 };
 
-export { AppContext, AppProvider };
+
+
+

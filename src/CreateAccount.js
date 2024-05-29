@@ -71,6 +71,7 @@ class CreateAccount extends React.Component {
 
     return (
       <div className="Id">
+        
         {/* Formulaire de création de compte */}
         <form className="formBox" onSubmit={this.handleSubmit}>
           <label htmlFor="firstName" style={{margin:'auto'}}>{this.props.title1} :</label>

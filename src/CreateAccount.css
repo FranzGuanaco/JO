@@ -1,12 +1,11 @@
 /* Default styles */
-html, body, #root {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #282c34;
-  }
+.create-account-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #282c34;
+}
   
   .Id {
     display: flex;

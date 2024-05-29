@@ -1,27 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './AdminPage.css';
+import axios from 'axios';
 
 function AdminPage() {
-  const [offers, setOffers] = useState([
-    { id: 1, name: 'Solo', description: 'Accès pour 1 personne', capacity: 1 },
-    { id: 2, name: 'Duo', description: 'Accès pour 2 personnes', capacity: 2 },
-    { id: 3, name: 'Familiale', description: 'Accès pour 4 personnes', capacity: 4 },
-  ]);
-
-  const [buyers, setBuyers] = useState([
-    { id: 1, name: 'John Doe', key: 'ABC123' },
-    { id: 2, name: 'Jane Smith', key: 'XYZ456' },
-    // Ajouter d'autres acheteurs ici
-  ]);
-
+  const [offers, setOffers] = useState([]);
+  const [buyers, setBuyers] = useState([]);
+  const [commandes, setCommandes] = useState([]);
   const [newOffer, setNewOffer] = useState({
     id: '',
     name: '',
     description: '',
+    prix: '',
     capacity: '',
   });
-
   const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    // Fetch offers from API
+    axios.get('http://localhost:3002/admin/offers')
+      .then(response => {
+        if (response.data.status === 'success') {
+          setOffers(response.data.offers);
+        } else {
+          console.error('Erreur lors de la récupération des offres:', response.data.message);
+        }
+      })
+      .catch(error => {
+        console.error('Erreur lors de la requête:', error);
+      });
+  
+    // Fetch commandes from API
+    axios.get('http://localhost:3002/admin/commandes')
+      .then(response => {
+        if (response.data.status === 'success') {
+          setCommandes(response.data.commandes);
+        } else {
+          console.error('Erreur lors de la récupération des commandes:', response.data.message);
+        }
+      })
+      .catch(error => {
+        console.error('Erreur lors de la requête:', error);
+      });
+  }, []);
+  
+  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -34,24 +56,55 @@ function AdminPage() {
   const handleAddOffer = (e) => {
     e.preventDefault();
     if (isEditing) {
-      setOffers(
-        offers.map((offer) =>
-          offer.id === newOffer.id ? newOffer : offer
-        )
-      );
-      setIsEditing(false);
+      axios.put(`http://localhost:3002/admin/offers/${newOffer.id}`, {
+        name: newOffer.name,
+        description: newOffer.description,
+        prix: parseFloat(newOffer.prix),
+        capacity: parseInt(newOffer.capacity)
+      }).then(response => {
+        if (response.data.status === 'success') {
+          setOffers(offers.map(offer => offer.id === newOffer.id ? { ...newOffer, prix: parseFloat(newOffer.prix), capacity: parseInt(newOffer.capacity) } : offer));
+          setIsEditing(false);
+        } else {
+          console.error('Erreur lors de la mise à jour de l\'offre:', response.data.message);
+        }
+      }).catch(error => {
+        console.error('Erreur lors de la requête:', error);
+      });
     } else {
-      setOffers([...offers, { ...newOffer, id: offers.length + 1 }]);
+      axios.post('http://localhost:3002/admin/offers', {
+        name: newOffer.name,
+        description: newOffer.description,
+        prix: parseFloat(newOffer.prix),
+        capacity: parseInt(newOffer.capacity)
+      }).then(response => {
+        if (response.data.status === 'success') {
+          setOffers([...offers, { ...newOffer, id: response.data.id, prix: parseFloat(newOffer.prix), capacity: parseInt(newOffer.capacity) }]);
+        } else {
+          console.error('Erreur lors de la création de l\'offre:', response.data.message);
+        }
+      }).catch(error => {
+        console.error('Erreur lors de la requête:', error);
+      });
     }
-    setNewOffer({ id: '', name: '', description: '', capacity: '' });
+    setNewOffer({ id: '', name: '', description: '', prix: '', capacity: '' });
   };
 
   const handleDeleteOffer = (id) => {
-    setOffers(offers.filter((offer) => offer.id !== id));
+    axios.delete(`http://localhost:3002/admin/offers/${id}`)
+      .then(response => {
+        if (response.data.status === 'success') {
+          setOffers(offers.filter((offer) => offer.id !== id));
+        } else {
+          console.error('Erreur lors de la suppression de l\'offre:', response.data.message);
+        }
+      }).catch(error => {
+        console.error('Erreur lors de la requête:', error);
+      });
   };
 
   const handleEditOffer = (offer) => {
-    setNewOffer(offer);
+    setNewOffer({ ...offer, prix: offer.prix.toString(), capacity: offer.capacity.toString() });
     setIsEditing(true);
   };
 
@@ -99,6 +152,17 @@ function AdminPage() {
                   />
                 </div>
                 <div className="form-group">
+                  <label htmlFor="prix">Prix</label>
+                  <input
+                    type="number"
+                    id="prix"
+                    name="prix"
+                    value={newOffer.prix}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+                <div className="form-group">
                   <label htmlFor="capacity">Capacité</label>
                   <input
                     type="number"
@@ -120,15 +184,25 @@ function AdminPage() {
             <table>
               <thead>
                 <tr>
-                  <th>Nom</th>
-                  <th>Clé</th>
+                  <th>ID Commande</th>
+                  <th>ID Utilisateur</th>
+                  <th>Nom Utilisateur</th>
+                  <th>ID Offre</th>
+                  <th>Nom Offre</th>
+                  <th>Quantité</th>
+                  <th>Clé Commande</th>
                 </tr>
               </thead>
               <tbody>
-                {buyers.map((buyer) => (
-                  <tr key={buyer.id}>
-                    <td>{buyer.name}</td>
-                    <td>{buyer.key}</td>
+                {commandes.map((commande) => (
+                  <tr key={commande.commande_id}>
+                    <td>{commande.commande_id}</td>
+                    <td>{commande.utilisateur_id}</td>
+                    <td>{commande.utilisateur_nom}</td>
+                    <td>{commande.offre_id}</td>
+                    <td>{commande.offre_nom}</td>
+                    <td>{commande.quantite}</td>
+                    <td>{commande.clef_commande}</td>
                   </tr>
                 ))}
               </tbody>
@@ -141,5 +215,6 @@ function AdminPage() {
 }
 
 export default AdminPage;
+
 
 
